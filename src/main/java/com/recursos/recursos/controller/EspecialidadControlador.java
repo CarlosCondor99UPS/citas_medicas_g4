@@ -10,57 +10,49 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/especialidad")
 @CrossOrigin("*")
 public class EspecialidadControlador {
-    private EspecialidadServicio especialidadServicio;
 
     @Autowired
-    public EspecialidadControlador(EspecialidadServicio especialidadServicio) {
-        this.especialidadServicio = especialidadServicio;
-    }
-    //LISTAR
-    @GetMapping("/listar")
-    public List<Especialidad> obtenerTodosLosItems() {
-        return especialidadServicio.getEspecialidad();
-    }
+    EspecialidadServicio especialidadServicio;
 
     //CREAR
     @PostMapping("/crear")
-    public void crearEspecialidad(@RequestBody Especialidad especialidad) {
-        especialidadServicio.insertarEspecialidad(especialidad);
+    public ResponseEntity<Especialidad> crearEspecialidad(@RequestBody Especialidad especialidad){
+        return ResponseEntity.status(HttpStatus.CREATED).body(especialidadServicio.guardarEspecialidad(especialidad));
     }
-    //ACTUALIZAR
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<String> actualizarEspecialidad(@PathVariable("id") int id, @RequestBody Especialidad especialidadActualizado) {
-        Especialidad especialidadActualizadoResultado = especialidadServicio.actualizarEspecialidad(id, especialidadActualizado);
-        if (especialidadActualizadoResultado != null) {
-            return ResponseEntity.ok("Catálogo actualizado exitosamente");
-        } else {
-            return ResponseEntity.notFound().build();
 
-        }
+    //LISTAR
+    @GetMapping("/listar")
+    public List<Especialidad> listarEspecialidades(){
+        return especialidadServicio.listarEspecialidades();
     }
+
+    //LISTAR POR ID
+    @GetMapping("/buscar/{especialidad_id}")
+    public ResponseEntity<Especialidad> listarEspecialidadesId(@PathVariable("especialidad_id") Integer especialidad_id){
+        return ResponseEntity.status(HttpStatus.OK).body(especialidadServicio.obtenerEspecialidadPorId(especialidad_id));
+    }
+
     //ELIMINAR
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarEspecialidad(@PathVariable("id") int id) {
-        especialidadServicio.eliminarEspecialidad(id);
-        return ResponseEntity.ok("Especialidad eliminada exitosamente");
+    @DeleteMapping("/eliminar/{especialidad_id}")
+    public void eliminarEspecialidad(@PathVariable("especialidad_id") Integer especialidad_id){
+        especialidadServicio.eliminarEspecialidadPorId(especialidad_id);
     }
-    //BUSCAR POR ID
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Especialidad> buscarPorId(@PathVariable("id") int id) {
-        Especialidad especialEncontrado = especialidadServicio.buscarPorId(id);
-        if (especialEncontrado != null) {
-            return ResponseEntity.ok(especialEncontrado);
+
+    //ACTUALIZAR
+    @PutMapping("/actualizar/{especialidad_id}")
+    public ResponseEntity<Especialidad> actualizarEspecialidad(@PathVariable("especialidad_id") Integer especialidad_id, @RequestBody Especialidad especialidadActualizada) {
+        Especialidad especialidad = especialidadServicio.actualizarEspecialidad(especialidad_id, especialidadActualizada);
+
+        if (especialidad != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(especialidad);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
-
 
 
 }
