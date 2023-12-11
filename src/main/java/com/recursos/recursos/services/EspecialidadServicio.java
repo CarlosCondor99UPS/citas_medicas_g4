@@ -17,7 +17,7 @@ public interface EspecialidadServicio {
     Especialidad guardarEspecialidad(Especialidad especialidades);
     List<Especialidad> listarEspecialidades();
     Especialidad obtenerEspecialidadPorId(Integer id);
-    //Optional<Especialidad> get(Integer id);
+    Optional<Especialidad> get(Integer id);
     void eliminarEspecialidadPorId(Integer id);
     Especialidad actualizarEspecialidad(Integer id, Especialidad especialidadActualizada);
 
