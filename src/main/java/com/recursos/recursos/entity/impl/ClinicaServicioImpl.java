@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class ClinicaServicioImpl implements ClinicaServicio {
     @Autowired
-    ClinicaRepositorio clinicaRepositorio;
+     ClinicaRepositorio clinicaRepositorio;
 
 
     @Override
@@ -28,8 +28,8 @@ public class ClinicaServicioImpl implements ClinicaServicio {
 
     @Override
     public Clinica obtenerClinicaPorId(Integer clinica_id) {
-        Optional<Clinica> citaOptional = clinicaRepositorio.findById(clinica_id);
-        return citaOptional.orElse(null);
+        Optional<Clinica> clinicaOptional = clinicaRepositorio.findById(clinica_id);
+        return clinicaOptional.orElse(null);
     }
 
 
@@ -37,4 +37,11 @@ public class ClinicaServicioImpl implements ClinicaServicio {
     public Optional<Clinica> get(Integer clinica_id) {
         return clinicaRepositorio.findById(clinica_id);
     }
+
+    @Override
+    public void delete(Integer id) {
+        clinicaRepositorio.deleteById(id);
+    }
+
+
 }

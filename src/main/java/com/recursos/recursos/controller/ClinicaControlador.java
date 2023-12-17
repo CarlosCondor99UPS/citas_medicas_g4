@@ -1,8 +1,6 @@
 package com.recursos.recursos.controller;
 
-import com.recursos.recursos.entity.Clinica;
-import com.recursos.recursos.entity.Medico;
-import com.recursos.recursos.entity.Persona;
+import com.recursos.recursos.entity.*;
 
 import com.recursos.recursos.services.ClinicaServicio;
 import com.recursos.recursos.services.MedicoServicio;
@@ -10,6 +8,7 @@ import com.recursos.recursos.services.PersonaServicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +55,12 @@ public class ClinicaControlador {
 
         return clinicaServicio.guardarprescripcion(clinica, clinicaPersona);
 
+    }
+
+    //ELIMINAR
+    @DeleteMapping("/eliminarClinica/{id}")
+    public void eliminarClinica(@PathVariable("id") Integer id){
+        clinicaServicio.delete(id);
     }
 
 

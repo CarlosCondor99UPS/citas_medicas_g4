@@ -1,6 +1,8 @@
 package com.recursos.recursos.services;
 
 import com.recursos.recursos.entity.Clinica;
+import com.recursos.recursos.entity.Especialidad;
+import com.recursos.recursos.entity.Servicio;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,5 +12,11 @@ public interface ClinicaServicio {
     Optional<Clinica> get(Integer id);
     Clinica guardarprescripcion(Clinica clinica, List<Clinica> clinicaPersona) throws Exception;
     Clinica obtenerClinicaPorId(Integer clinica_id);
+
+    void delete(Integer id);
+
+
+
+
 
 }
