@@ -1,8 +1,7 @@
 package com.recursos.recursos.services;
 
 import com.recursos.recursos.entity.Clinica;
-import com.recursos.recursos.entity.Especialidad;
-import com.recursos.recursos.entity.Servicio;
+
 
 import java.util.List;
 import java.util.Optional;
