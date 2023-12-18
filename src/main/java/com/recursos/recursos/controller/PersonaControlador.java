@@ -16,7 +16,7 @@ public class PersonaControlador {
     PersonaServicio personaServicio;
 
 
-    @PostMapping("/registrar")
+    @PostMapping("/crear")
     public ResponseEntity<Persona> registrarPersona(@RequestBody Persona persona) {
         // Lógica para guardar la persona
         Persona personaGuardada = personaServicio.crearPersona(persona);

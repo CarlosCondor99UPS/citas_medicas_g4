@@ -7,6 +7,8 @@ import com.recursos.recursos.services.EspecialidadServicio;
 import com.recursos.recursos.services.MedicoServicio;
 import com.recursos.recursos.services.PersonaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,8 +31,6 @@ public class MedicoControlador {
     public Medico guardarMedicoEspecialidad(@PathVariable("persona_id") Integer persona_id,
                                             @PathVariable("especialidad_id") Integer especialidad_id,
                                             @RequestBody Medico medico) throws Exception {
-
-
         List<Medico> medicoEspecialidad = new ArrayList<>();
         Especialidad especialidad = new Especialidad();
         Optional<Especialidad> especialidadOptional = especialidadServicio.get(especialidad_id);
@@ -55,6 +55,17 @@ public class MedicoControlador {
 
         return medicoServicio.guardarMedicoEspecialidad(medico,medicoEspecialidad);
 
+    }
+    //LISTAR
+    @GetMapping("/listar")
+    public List<Medico> listarMedicos(){
+        return medicoServicio.listarMedicos();
+    }
+
+    //LISTAR POR ID
+    @GetMapping("/listar/{medico_id}")
+    public ResponseEntity<Medico> listarMeicosId(@PathVariable("medico_id") Integer medico_id){
+        return ResponseEntity.status(HttpStatus.OK).body(medicoServicio.obtenerMedicoPorId(medico_id));
     }
 
 

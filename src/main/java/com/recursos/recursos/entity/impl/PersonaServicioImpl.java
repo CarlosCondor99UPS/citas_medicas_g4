@@ -19,24 +19,17 @@ public class PersonaServicioImpl implements PersonaServicio {
         Optional<Persona> personaOptional = personaRepositorio.findById(persona_id);
         return personaOptional.orElse(null);
     }
-
     public Persona crearPersona(Persona persona) {
         // Verificar si ya existe una persona con la misma cédula
         Persona personaExistente = personaRepositorio.findByCedula(persona.getCedula());
         if (personaExistente != null && personaExistente.equals(persona.getCedula())) {
             throw new PersonaExistenteException("Ya existe una persona con la misma cédula.");
         }
-        // Asignar roles por tipo
         persona.asignarRolesPorTipo();
 
         return personaRepositorio.save(persona);
     }
-    //EXCEPCION
-    public class PersonaExistenteException extends RuntimeException {
-        public PersonaExistenteException(String message) {
-            super(message);
-        }
-    }
+
     public void eliminarPersona(Integer id) {
         Optional<Persona> personaOptional = personaRepositorio.findById(id);
         personaOptional.ifPresent(personaRepositorio::delete);
@@ -47,10 +40,13 @@ public class PersonaServicioImpl implements PersonaServicio {
         return personaRepositorio.findById(persona_id);
     }
 
+    @Override
+    public List<Persona> listarPersonas() {
+        return personaRepositorio.findAll();
+    }
 
 
     public Persona actualizarPersona(Persona persona) {
-        // Verificar si la persona existe en la base de datos
         Optional<Persona> personaExistente = personaRepositorio.findById(persona.getPersona_id());
         if (!personaExistente.isPresent()) {
             throw new PersonaNoEncontradaException("No se encontró la persona a actualizar.");
@@ -76,12 +72,15 @@ public class PersonaServicioImpl implements PersonaServicio {
         // Guardar los cambios en la base de datos
         return personaRepositorio.save(personaActualizada);
     }
-
+    public class PersonaExistenteException extends RuntimeException {
+        public PersonaExistenteException(String message) {
+            super(message);
+        }
+    }
     public class PersonaNoEncontradaException extends RuntimeException {
         public PersonaNoEncontradaException(String mensaje) {
             super(mensaje);
         }
     }
-
 
 }

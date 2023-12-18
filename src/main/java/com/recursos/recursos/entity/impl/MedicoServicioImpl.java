@@ -22,6 +22,7 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
     @Override
     public List<Medico> listarMedicos() {
+
         return medicoRepositorio.findAll();
     }
     @Override
