@@ -1,7 +1,6 @@
 package com.recursos.recursos.controller;
 
 import com.recursos.recursos.entity.Especialidad;
-import com.recursos.recursos.entity.registro;
 import com.recursos.recursos.services.EspecialidadServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @RestController
 @RequestMapping("/especialidad")
 @CrossOrigin("*")
