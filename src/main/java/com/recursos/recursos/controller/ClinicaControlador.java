@@ -7,7 +7,10 @@ import com.recursos.recursos.services.MedicoServicio;
 import com.recursos.recursos.services.PersonaServicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class ClinicaControlador {
     @Autowired
     PersonaServicio personaServicio;
 
+    //CREAR
     @PostMapping("/crear/{medico_id}/{persona_id}")
     public Clinica guardarClinica(@PathVariable("medico_id") Integer medico_id,
                                   @PathVariable("persona_id") Integer persona_id,
@@ -63,6 +67,25 @@ public class ClinicaControlador {
         clinicaServicio.delete(id);
     }
 
+    //LISTAR
+    @GetMapping("/listarClinicas")
+    public List<Clinica> listarClinicas() { return clinicaServicio.listarClinica(); }
+
+    //LISTAR POR ID
+    @GetMapping("/listar/{clinica_id}")
+    public Clinica listarClinicasId (@PathVariable("clinica_id") Integer clinica_id) {
+        return clinicaServicio.obtenerClinicaPorId( clinica_id );  }
 
 
+    //ACTUALIZAR
+    @PutMapping("/actualizarClinica/{id}")
+    public ResponseEntity<Clinica> actualizarClinica(@PathVariable("id") Integer id, @RequestBody Clinica clinicaActualizada) {
+        Clinica clinica = clinicaServicio.actualizarClinica(id, clinicaActualizada);
+
+        if (clinica != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(clinica);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

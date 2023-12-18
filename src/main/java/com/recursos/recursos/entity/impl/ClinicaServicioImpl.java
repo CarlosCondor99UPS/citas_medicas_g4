@@ -15,17 +15,19 @@ public class ClinicaServicioImpl implements ClinicaServicio {
     @Autowired
      ClinicaRepositorio clinicaRepositorio;
 
-
+    //CREAR
     @Override
     public Clinica guardarprescripcion(Clinica clinica, List<Clinica> clinicaPersona) {
         return clinicaRepositorio.save(clinica);
     }
 
+    //LISTAR
     @Override
     public List<Clinica> listarClinica() {
         return clinicaRepositorio.findAll();
     }
 
+    //LISTAR POR ID
     @Override
     public Clinica obtenerClinicaPorId(Integer clinica_id) {
         Optional<Clinica> clinicaOptional = clinicaRepositorio.findById(clinica_id);
@@ -38,9 +40,25 @@ public class ClinicaServicioImpl implements ClinicaServicio {
         return clinicaRepositorio.findById(clinica_id);
     }
 
+    //ELIMINAR
     @Override
     public void delete(Integer id) {
         clinicaRepositorio.deleteById(id);
+    }
+
+
+    //ACTUALIZAR
+    public Clinica actualizarClinica(Integer id, Clinica clinicaActualizada) {
+        Optional<Clinica> clinicaOptional = clinicaRepositorio.findById(id);
+        if (clinicaOptional.isPresent()) {
+            Clinica clinicaExistente = clinicaOptional.get();
+            clinicaExistente.setCertificados(clinicaActualizada.getCertificados());
+            clinicaExistente.setOrdenes(clinicaActualizada.getOrdenes());
+            clinicaExistente.setPrescripciones(clinicaActualizada.getPrescripciones());
+            return clinicaRepositorio.save(clinicaExistente);
+        } else {
+            return null;
+        }
     }
 
 
