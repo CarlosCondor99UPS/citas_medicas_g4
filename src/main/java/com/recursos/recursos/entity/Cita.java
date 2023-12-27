@@ -3,8 +3,10 @@ package com.recursos.recursos.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "cita")
@@ -22,13 +24,17 @@ public class Cita {
     @ManyToOne
     private Medico medico;
 
-    public Cita() {
+    public Cita(Integer cita_id, Date fechaCitaDate, Time time, boolean estado) {
     }
     public Cita(Integer cita_id, LocalDate fechaCita, LocalTime hora, boolean estado) {
         this.cita_id = cita_id;
         this.fechaCita = fechaCita;
         this.hora = hora;
         this.estado = estado;
+    }
+
+    public Cita() {
+
     }
 
     public Integer getCita_id() {
